@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="vod-api-proxy" default="dist" basedir="." description="VOD API Proxy">
+    <property name="buildDir" value="build"/>
+    <property name="srcDir" value="src"/>
+
+    <target name="test">
+        <phpunit printsummary="true" haltonfailure="true" haltonerror="true" haltonincomplete="true">
+            <batchtest>
+                <fileset dir="./tests">
+                    <include name="**/*Test.php"/>
+                </fileset>
+            </batchtest>
+        </phpunit>
+    </target>
+
+    <fileset id="srcfiles" dir="${srcDir}">
+        <include name="**/*"/>
+        <exclude name="**/*.tmp"/>
+    </fileset>
+
+    <target name="build" depends="test">
+        <copy todir="${buildDir}">
+            <fileset refid="srcfiles"/>
+        </copy>
+    </target>
+
+    <target name="clean">
+        <delete dir="${buildDir}" />
+    </target>
+
+    <target name="dist" depends="clean,build" />
+</project>
